@@ -325,8 +325,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScaleFactor: 0.4
+  m_ReferenceResolution: {x: 1280, y: 1280}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -389,6 +389,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   columns: 9
   rows: 9
-  squareOffset: 2.5
-  startPosOffset: {x: 0, y: 0}
+  squareOffset: 10
+  startPosOffset: {x: -552, y: 552}
   gridSquare: {fileID: 3969920256876875218, guid: b144f559dd5e22141b5c1e7098074463, type: 3}

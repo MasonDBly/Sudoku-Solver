@@ -5,9 +5,9 @@ using UnityEngine;
 public class Grid : MonoBehaviour
 {
 
-    public int columns = 0;
-    public int rows = 0;
-    public float squareOffset = 0.0f;
+    public int columns = 9;
+    public int rows = 9;
+    public float squareOffset = 5.0f;
     public Vector2 startPosOffset = new Vector2(0.0f, 0.0f);
 
 
@@ -35,7 +35,7 @@ public class Grid : MonoBehaviour
     private void CreateGrid()
     {
         SpawnGridSquares();
-        SetGridSquares();
+        //SetGridSquares();
     }
 
     private void SpawnGridSquares()
@@ -54,7 +54,7 @@ public class Grid : MonoBehaviour
                 grid_square_instance.transform.SetParent(transform);
                 grid_square_instance.transform.localPosition = new Vector3(column
                     * offset.x
-                    + startPosOffset.x, row * offset.y + startPosOffset.y, 0.0f);
+                    + startPosOffset.x, startPosOffset.y - row * offset.y, 0.0f);
 
 
                 grid_squares_.Add(grid_square_instance);
