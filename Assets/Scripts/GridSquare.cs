@@ -69,6 +69,7 @@ public class GridSquare : MonoBehaviour
         {
             number.GetComponent<TextMeshProUGUI>().text = value_.ToString();
             possibleValues_.Clear();
+            GetComponentInParent<Grid>().UpdateGrid(this);
         }
         else
         {
@@ -90,6 +91,11 @@ public class GridSquare : MonoBehaviour
     internal void RemoveValue(int value)
     {
         possibleValues_.Remove(value);
+    }
+
+    internal List<int> GetValues()
+    {
+        return possibleValues_;
     }
 
     internal bool ContainsValue(int value)
