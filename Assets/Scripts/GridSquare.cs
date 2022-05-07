@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class GridSquare : MonoBehaviour
 {
@@ -32,6 +33,11 @@ public class GridSquare : MonoBehaviour
                 buttons.RemoveAt(i);
             }
         }
+
+        if (possibleValues_.Count == 1)
+        {
+            SetValue(possibleValues_[0]);
+        }
     }
 
     private void CreateButtons()
@@ -57,7 +63,7 @@ public class GridSquare : MonoBehaviour
         }
     }
 
-    public void DisplayText()
+    private void DisplayText()
     {
         if (value_ != 0)
         {
@@ -66,7 +72,7 @@ public class GridSquare : MonoBehaviour
         }
         else
         {
-            number.GetComponent<TextMeshProUGUI>().text = "";
+            throw new Exception("No value set");
         }
     }
 
@@ -76,8 +82,18 @@ public class GridSquare : MonoBehaviour
         DisplayText();
     }
 
-    public void PropogateWFC()
+    public int GetValue()
     {
+        return value_;
+    }
 
+    internal void RemoveValue(int value)
+    {
+        possibleValues_.Remove(value);
+    }
+
+    internal bool ContainsValue(int value)
+    {
+        return possibleValues_.Contains(value);
     }
 }

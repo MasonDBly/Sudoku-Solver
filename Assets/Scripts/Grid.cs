@@ -62,25 +62,87 @@ public class Grid : MonoBehaviour
         }
     }
 
-    // Set all grid quares to a random int between 1 and 10
-    private void SetGridSquares()
+    // update the wave function collapse
+    public void UpdateGrid(GridSquare gridSquare)
     {
-        foreach (GameObject grid_square in grid_squares_)
+        int value = gridSquare.GetValue();
+        int pos = grid_squares_.IndexOf(gridSquare.gameObject);
+
+        // for each grid sqare in the column
+        for (int i = pos % columns; i < grid_squares_.Count; i += columns)
         {
-            grid_square.GetComponent<GridSquare>().SetValue(Random.Range(1, 10));
+            CheckGridSquare(i, value);
+        }
+
+        // for each grid square in the row
+        for (int i = pos - pos % columns; i < grid_squares_.Count; i++)
+        {
+            CheckGridSquare(i, value);
+        }
+
+        // for each grid square in the 3x3 box
+         
+        
+        return;
+    }
+
+    // check the gridsquare and propogate
+    public void CheckGridSquare(int pos, int value)
+    {
+        GridSquare square = grid_squares_[pos].GetComponent<GridSquare>();
+        if (square.GetValue() == 0 && square.ContainsValue(value))
+        {
+            square.RemoveValue(value);
+            UpdateGrid(square);
         }
     }
 
-    //private void PositionGridSquares()
-    //{
-    //    var square_rect = grid_squares_[0].GetComponent<RectTransform>();
-    //    Vector2 offset = new Vector2();
-    //    offset.x = square_rect.rect.width * square_rect.transform.localScale.x + square_offset;
-    //    offset.y = square_rect.rect.height * square_rect.transform.localScale.y + square_offset;
+    private bool IsValidSudokuValue(int value, int pos)
+    {
+        // check column
+        for (int i = 0; i < grid_squares_.Count; i++)
+        {
+            if (i != pos && grid_squares_[i].GetComponent<GridSquare>().GetValue() == value)
+            {
+                return false;
+            }
+        }
 
-    //    foreach (GameObject grid_square in grid_squares_)
-    //    {
-    //        grid_square.transform.localPosition = new Vector3(grid_square.transform.localPosition.x, grid_square.transform.localPosition.y, 0);
-    //    }
-    //}
+        // check row
+        for (int i = 0; i < grid_squares_.Count; i += columns)
+        {
+            if (i != pos && grid_squares_[i].GetComponent<GridSquare>().GetValue() == value)
+            {
+                return false;
+            }
+        }
+
+        // check box
+        int box_start = (pos / columns) / 3 * 3 * columns;
+        int box_end = box_start + 3 * columns;
+        for (int i = box_start; i < box_end; i++)
+        {
+            if (i != pos && grid_squares_[i].GetComponent<GridSquare>().GetValue() == value)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }
+
+
+//private void PositionGridSquares()
+//{
+//    var square_rect = grid_squares_[0].GetComponent<RectTransform>();
+//    Vector2 offset = new Vector2();
+//    offset.x = square_rect.rect.width * square_rect.transform.localScale.x + square_offset;
+//    offset.y = square_rect.rect.height * square_rect.transform.localScale.y + square_offset;
+
+//    foreach (GameObject grid_square in grid_squares_)
+//    {
+//        grid_square.transform.localPosition = new Vector3(grid_square.transform.localPosition.x, grid_square.transform.localPosition.y, 0);
+//    }
+//}
