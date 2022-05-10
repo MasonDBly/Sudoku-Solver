@@ -134,7 +134,10 @@ public class Grid : MonoBehaviour
                 {
                     foreach (int value in square.GetValues())
                     {
-                        counts[value - 1]++;
+                        if (value != -1)
+                        {
+                            counts[value - 1]++;
+                        }
                     }
                 }
             }
@@ -172,7 +175,10 @@ public class Grid : MonoBehaviour
                 {
                     foreach (int value in square.GetValues())
                     {
-                        counts[value - 1]++;
+                        if (value != -1)
+                        {
+                            counts[value - 1]++;
+                        }
                     }
                 }
             }
@@ -199,10 +205,10 @@ public class Grid : MonoBehaviour
         for (int box = 0; box < 9; box++)
         {
             var counts = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            int start = box * 3 * 
-            for (int i = box * 21; i < (box + 1) * 21; i++)
+            int start = (box * 3) % 9 + (box / 3) * 27;
+            for (int i = start; i < start + 21; i++)
             {
-                if (i % 3 == 0 && i != box * 21)
+                if (i % 3 == 0 && i != start)
                 {
                     i += 6;
                 }
@@ -215,7 +221,10 @@ public class Grid : MonoBehaviour
                 {
                     foreach (int value in square.GetValues())
                     {
-                        counts[value - 1]++;
+                        if (value != -1)
+                        {
+                            counts[value - 1]++;
+                        }
                     }
                 }
             }
@@ -224,9 +233,9 @@ public class Grid : MonoBehaviour
             {
                 if (counts[j] == 1)
                 {
-                    for (int i = box * 21; i < (box + 1) * 21; i++)
+                    for (int i = start; i < start + 21; i++)
                     {
-                        if (i % 3 == 0 && i != box * 21)
+                        if (i % 3 == 0 && i != start)
                         {
                             i += 6;
                         }
